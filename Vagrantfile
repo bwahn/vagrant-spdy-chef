@@ -14,7 +14,7 @@ Vagrant.configure("1") do |config|
       ws_chef.cookbooks_path = ["cookbook-nginx-standalone"]
       ws_chef.add_recipe "apt"
       ws_chef.add_recipe "build-essential"
-      ws_chef.add_recipe "nginx"
+      #ws_chef.add_recipe "nginx"
     end
   end
 end

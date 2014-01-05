@@ -1,9 +1,10 @@
 #
 # Cookbook Name:: nginx
-# Recipe:: common/dir
-# Author:: AJ Christensen <aj@junglist.gen.nz>
+# Recipe:: http_spdy_module
 #
-# Copyright 2008-2012, Opscode, Inc.
+# Author:: Christoph Buente (<christoph@meinekleinefarm.org>)
+#
+# Copyright 2013, MeinekleineFarm.org
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,29 +19,5 @@
 # limitations under the License.
 #
 
-directory node['nginx']['dir'] do
-  owner "root"
-  group "root"
-  mode "0755"
-end
-
-directory node['nginx']['log_dir'] do
-  mode 0755
-  owner node['nginx']['user']
-  action :create
-end
-
-%w(sites-available sites-enabled conf.d).each do |leaf|
-  directory File.join(node['nginx']['dir'], leaf) do
-    owner "root"
-    group "root"
-    mode "0755"
-  end
-end
-
-directory "/var/www" do
-  recursive true
-  owner "www-data"
-  group "www-data"
-  mode "755"
-end
+node.run_state['nginx_configure_flags'] =
+  node.run_state['nginx_configure_flags'] | ['--with-http_spdy_module']
